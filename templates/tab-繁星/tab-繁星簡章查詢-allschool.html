@@ -1,0 +1,52 @@
+
+
+    <div class="row" style="margin-top:15px ;">
+
+
+
+
+      <nav style="margin-left: 15px;" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('home')}}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{url_for('繁星校系分則分類')}}">繁星校系學群分類</a></li>
+          <li class="breadcrumb-item active">{{type}}</li>
+        </ol>
+      </nav>
+
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header">所有學校</div>
+                <div class="card-body">
+                    <!-- News Start  -->
+                    <div class="tableFixHead div" >
+                    <table id="table" class="w3-table w3-striped w3-small table-fixed" >
+                        <thead>
+                          <tr>
+                            <th class="filter no-filter" scope="col">代碼</th>
+                            <th class="filter" scope="col">學校名稱</th>
+                            <th class="filter" scope="col">繁星標準</th>
+                            <th class="filter" scope="col">國/私立</th>
+                            <!-- <th class="filter" scope="col">地區</th>                             -->
+                            <th class="no-filter no-search no-sort " scope="col">官方網站</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in schools %}
+                            <tr>
+                                <td>{{ item['id'] }}</td> 
+                               <td><a href="{{url_for('繁星校系分則查詢school',type=type,pid=item['id'])}}">{{ item['SchoolName'][5:] }}</a></td>
+                               <td>在校前{{ item['star'] }}</td> 
+                               <td>{% if item['isNational'] =="True"%}國立{%else%}私立{%endif%}</td> 
+                               <!-- <td>{{ item['zone'] }}</td>  -->
+                               <td><a target="_blank" href="{{ item['official_website'] }}">官網</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                        </div>
+                   <!-- News End -->
+                </div>
+            </div>
+        </div>
+    </div>   
+

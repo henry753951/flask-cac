@@ -1,0 +1,258 @@
+{% extends "base/base.html" %}
+{% block title %}繁星推薦校系分則查詢{% endblock title%}
+{% block h1 %}繁星推薦校系分則查詢{% endblock h1%}
+{% block content%}
+<style>
+
+table td:nth-child(2){
+    width:100%;
+}
+
+.cell {
+  border-right: 1px solid black;
+
+}  
+table, th, td{
+  border: 1px solid rgba(224, 224, 224, 0.534);
+  border-collapse: collapse;
+  padding: 3px 5px;
+}
+.bottom-border{
+  border-bottom: 1px solid black;
+}  
+table{
+    width:100%;
+
+    
+}
+table td{
+    white-space: nowrap;
+    margin: 1em auto;
+}
+
+/* fix */
+
+.div{
+  overflow-x: auto;
+  height: 1000px;
+  width: 95%;
+  margin: auto;
+}
+
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: -1px;
+    background-color: rgba(253, 253, 253, 0.95);
+    table-layout : fixed;
+    
+
+
+}
+
+td,th{
+  font-size: x-large;
+}
+
+@media (max-width: 1200px) {
+  td,th{
+    zoom: 65%;
+    min-width: 100%;
+    font-size:12px;
+  }
+  .div{
+  overflow-x: auto;
+  height: 500px;
+}
+.hidetips{
+    display: none;
+  }
+  
+}
+ </style>
+
+<div class="" style="padding:8px; margin:10px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+    <div class="row animate__animated animate__fadeIn delay-3" style="margin-top:15px ;">
+
+      <nav style="margin-left: 15px;" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('home')}}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{url_for('繁星校系分則分類')}}">繁星校系學群分類</a></li>
+          <li class="breadcrumb-item"><a href="{{url_for('繁星校系分則查詢',type=type)}}">{{type}}</a></li>
+          <li class="breadcrumb-item active">{{ school }}</li>
+        </ol>
+      </nav>
+
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header"><h3>{{ school }}</h3><h5>繁星標準:在校前{{ departmentlist[0]['detail']['學校繁星標準'] }} </h5></div>
+                <div class="card-body">
+                  <p class="hidetips">(按住shift+滾輪滾動，可以快速橫向瀏覽喔!)</p>
+                  <div class="row checkbox_fixed">
+                    <div class="col"><input type="checkbox" class="form-check-input" checked value="hide" id="檢定標準" onchange="hide_show_table(this.id);">檢定標準</div>
+                    <div class="col"><input type="checkbox" class="form-check-input" checked value="hide" id="分發比序" onchange="hide_show_table(this.id);">分發比序</div>
+                </div>   
+
+
+                    <div class="div">
+                    <table id="table" class="table-rwd w3-table w3-striped w3-small table-fixed" 	style="margin-top: 30px;  " >
+                        <thead>
+                          <tr class="bottom-border fix">         
+                            <td class="filter cell" colspan="3" style="background:rgb(214, 214, 214)" scope="col"></td>   
+                            <td class="filter 檢定標準 cell" colspan="6" style="background:rgb(214, 214, 214); text-align: center; white-space:nowrap;" scope="col">檢定標準</td>  
+                            <td class="filter 分發比序" colspan="7" style="background:rgb(214, 214, 214); text-align: center; white-space:nowrap;" scope="col">分發比序</td>  
+                          </tr>
+                          <tr class="bottom-border">
+                            <th class="filter no-filter" style="white-space:nowrap;" scope="col">代碼</th>
+                            <th class="filter no-filter" style="white-space:nowrap;" scope="col">名稱</th>
+                            <th class="filter no-filter cell"  scope="col">人數</th>  
+      
+                            <th class="filter 檢定標準 "  scope="col">國</th>   
+                            <th class="filter 檢定標準"  scope="col">英</th>   
+                            <th class="filter 檢定標準"  scope="col">數</th>   
+                            <th class="filter 檢定標準"  scope="col">自</th>   
+                            <th class="filter 檢定標準"  scope="col">社</th>   
+                            <th class="filter 檢定標準 cell"  scope="col">英聽</th>   
+                            
+                            
+                            <th class="filter 分發比序"  scope="col">一</th>
+                            <th class="filter 分發比序"  scope="col">二</th>
+                            <th class="filter 分發比序"  scope="col">三</th>
+                            <th class="filter 分發比序"  scope="col">四</th>
+                            <th class="filter 分發比序"  scope="col">五</th>
+                            <th class="filter 分發比序"  scope="col">六</th>
+                            <th class="filter 分發比序"  scope="col">七</th>         
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in departmentlist %}
+                            <tr>
+                                <td><a target="_blank" href="{{ item['url'] }}">{{ item['detail']['代碼'] }}</a></td> 
+                                <td><i id="i-{{ item['detail']['代碼'] }}" style="margin-right:3px; color: rgb(255, 109, 109);" onclick="add('{{ item['detail']['代碼'] }}');" class="{% if item['detail']['代碼'] not in favlist %}far{%else%}fas{%endif%} fa-star "></i>{{ item['name'] }}</td> 
+                                <td  class="cell">{{ item['detail']['招收人數'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['國'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['英'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['數'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['自'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['社'] }}</td> 
+                                <td class="檢定標準 cell" >{{ item['detail']['學測檢定標準']['英聽'] }}</td> 
+
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no1'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no2'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no3'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no4'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no5'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no6'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no7'] }}</td> 
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>   
+
+</div>
+<form id="addFrom" action="{{url_for('addToFavoriteStar')}}" method="post" >
+  <input name="postid" id="postid" value="" hidden></input>
+</form>
+
+{% endblock content%}
+{% block script%}
+
+
+<script type="text/javascript">
+
+// 啟用通知
+var notyf = new Notyf()
+// 
+ function add(id) {
+    document.getElementById("postid").value=id;
+    if( document.getElementById("i-"+id).getAttribute("class")=="fas fa-star"){
+      
+      document.getElementById("i-"+id).setAttribute("class","far fa-star");
+      
+    }else{
+      document.getElementById("i-"+id).setAttribute("class","fas fa-star");
+    }
+
+    $("#addFrom").ajaxSubmit(function(message) {
+    // return message
+    console.log(message);
+    if((message=="rm_succ_"+id)&&document.getElementById("i-"+id).getAttribute("class")=="fas fa-star"){
+      document.getElementById("i-"+id).setAttribute("class","far fa-star");
+    }
+    if((message=="add_succ_"+id)&&document.getElementById("i-"+id).getAttribute("class")=="far fa-star"){
+      document.getElementById("i-"+id).setAttribute("class","fas fa-star");
+    }     
+    if( message=="請先登入"){
+      document.getElementById("i-"+id).setAttribute("class","far fa-star");
+
+      notyf.error('你必須先登入才能使用這個功能');
+      presentAlert()
+
+    } 
+  });
+  }
+
+
+
+
+
+
+
+    function hide_show_table(col_name)
+    {
+     var checkbox_val=document.getElementById(col_name).value;
+     if(checkbox_val=="hide")
+     {
+      var all_col=document.getElementsByClassName(col_name);
+
+      for(var i=0;i<all_col.length;i++)
+      {
+       all_col[i].style.display="none";
+      }
+      document.getElementById(col_name).value="show";
+     }
+        
+     else
+     {
+      var all_col=document.getElementsByClassName(col_name);
+      for(var i=0;i<all_col.length;i++)
+      {
+       all_col[i].style.display="table-cell";
+      }
+      document.getElementById(col_name).value="hide";
+     }
+    }
+</script>
+
+<script>
+$(function () {
+      $('#table').excelTableFilter({
+        'captions':{ a_to_z: '升序排列', z_to_a: '降序排列', search: '搜尋', select_all: '全選' }
+      });
+    });
+
+    $(document).ready(function () {
+    var HeightDiv = $("#div").height();
+    var HeightTable = $("table").height();
+    if (HeightTable > HeightDiv) {
+        var FontSizeTable = parseInt($("table").css("font-size"), 10);
+        while (HeightTable > HeightDiv && FontSizeTable > 5) {
+            FontSizeTable--;
+            $("table").css("font-size", FontSizeTable);
+            HeightTable = $("table").height();
+        }
+    }
+});
+
+  </script>
+  </script>
+{% endblock script%}

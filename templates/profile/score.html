@@ -1,0 +1,108 @@
+<style>
+.ScoreInput{
+  max-width: 100px;
+  margin-right: 20px;
+}
+.subject{
+  margin-right: 20px;
+}
+  
+</style>
+
+<div class="container" style="padding-top: 10px;" align="left">
+    <h3>成績設定</h3>      
+    <form id="score_update" action="{{ url_for('score_update') }}" style="margin-top:15px ;" class="row g-3" method="post" onsubmit="return score_update_submitForm()"> 
+      <div style="width: 100%;">
+      <table style="width: fit-content;">
+        <tbody><tr>
+          <th ></th>
+          <th >你的學測成績</th>
+          <th >去年級分換算</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="subject">國文</div>
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" name="chinese" min="0" max="15" name="chinese" value="{{score['國']['score']}}" >
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" id="chinese_conver" disabled="" >
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="subject">英文</div>
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" name="english" min="0" max="15" value="{{score['英']['score']}}" >
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" id="english_conver" disabled="" >
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="subject">數學</div>
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" name="math" min="0" max="15" value="{{score['數']['score']}}" >
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" id="math_conver" disabled="">
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="subject">社會</div>
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" name="society" min="0" max="15" value="{{score['社']['score']}}" >
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" id="society_conver" disabled="">
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="subject">自然</div>
+          </td>
+          <td>
+            <input type="number" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" name="naturally" min="0" max="15" value="{{score['自']['score']}}" >
+          </td>
+          <td>
+            <input type="text" class="form-control ScoreInput" inputmode="numeric" pattern="[0-15]*" id="naturally_conver" disabled="" control-id="ControlID-17">
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="subject">英聽</div>
+          </td>
+          <td>
+            <select id="english_hearing" class="form-control ScoreInput" name="english_hearing" >
+                <option {%if score['英聽']['score'] == '-' %}selected{%else%}{%endif%} value="-">無</option>
+            　	<option {%if score['英聽']['score'] == 'A' %}selected{%else%}{%endif%} value="A">A</option>
+            　	<option {%if score['英聽']['score'] == 'B' %}selected{%else%}{%endif%} value="B">B</option>
+            　	<option {%if score['英聽']['score'] == 'C' %}selected{%else%}{%endif%} value="C">C</option>
+            　	<option {%if score['英聽']['score'] == 'F' %}selected{%else%}{%endif%} value="F">F</option>
+            </select>
+            
+            
+            
+          </td>
+          <td></td>
+        </tr>
+      </tbody></table>
+      </div>
+
+      <button  class="btn btn-light " id="score_update_btn" data-mdb-ripple-color="dark" type="submit">保存</button>
+    <div>
+    </div>          
+  </form> 
+</div>
+  

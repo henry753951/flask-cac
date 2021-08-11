@@ -1,0 +1,54 @@
+
+<!-- Page Start -->    
+    <div class="container" style="padding-top: 80px;padding-bottom: 20%; padding-left: 20%;padding-right: 20%;" align="center">
+        <h1>更新資料</h1>  
+
+
+        <form id="getdata" action="{{ url_for('getdata') }}" class="row g-3" method="post" onsubmit="return update1();"> 
+        <select id="select" style="margin-bottom: 5px;" class="form-control select-input placeholder-active active" onChange="selfunction(this);"> 
+            <option value="caac">申請入學</option> 
+            <option value="star">繁星推薦</option> 
+        </select>   
+        <hr style="width:95%;margin: auto;margin-top: 15px;margin-bottom: 15px;">
+          <div class="form-outline ">
+            <input type='text'  id="year" class="form-control" name='year' autocomplete="off">
+            <label class="form-label" for="year">學年度</label>
+          </div>          
+          <div class="form-outline ">
+            <input type='url'  id="url" value="https://university-tw.ldkrsi.men/star/" class="form-control" name='url' autocomplete="off">
+            <label class="form-label" for="url">Url</label>
+          </div>
+          <button id="update1_btn"  class="btn btn-light" data-mdb-ripple-color="dark" type="submit">更新</button>
+          <div>
+            <a id="output"></a>
+          </div>          
+        </form> 
+    </div>
+      
+    <script type="text/javascript">
+        function update1() {
+          document.getElementById("update1_btn").disabled = true;
+          document.getElementById("update1_btn").innerText = "更新中...";
+          document.getElementById("output").innerHTML = "";
+          // jquery 表單提交
+          $("#getdata").ajaxSubmit(function(message) {
+            // return message
+            console.log(message);
+            document.getElementById("output").innerHTML = message;
+            document.getElementById("update1_btn").disabled = false;
+            document.getElementById("update1_btn").innerText = "更新";
+          });
+          return false;
+        }
+
+function selfunction(sel) {
+  var action="{{url_for('getdata')}}";
+  if(sel.options[sel.selectedIndex].text=="繁星推薦"){
+    action="{{url_for('getdata2')}}";
+  }else{
+    action="{{url_for('getdata')}}";
+  }
+  document.getElementById("getdata").setAttribute("action",action);
+}
+      </script>
+      

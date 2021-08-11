@@ -1,0 +1,105 @@
+{% extends "base/base.html" %}
+{% block title %}繁星校系分則-{{type}}{% endblock title%}
+{% block h1 %}繁星校系分則-{{type}}{% endblock h1%}
+{% block content%}
+<style>
+table{
+    width:100%;
+    white-space:nowrap; 
+}
+table  :nth-child(2){
+    width:100%;
+}
+
+.table-fixed thead th {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    background-color: #ffff;
+}
+.div{
+    overflow-x: auto;
+    height: 1000px;
+  }
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; font-size: x-large;}
+th     { background:rgb(214, 214, 214); }
+
+@media (max-width: 700px) {
+
+  th, td {  font-size:small ;}
+}
+@media (max-width: 350px) {
+    .div{
+      overflow-x: auto;
+      height: 1000px;
+    }
+    .table-fixed thead th {
+      top: 0px;
+      
+    }
+
+}
+
+
+ </style>
+
+<div class="animate__animated animate__fadeIn delay-3" style="padding:8px; margin:10px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+
+
+  <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        style="white-space: nowrap;"
+        >所有學校</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        style="white-space: nowrap;"
+        id="loading"
+        onclick="loading();"
+        href="{{ url_for('繁星查詢all',type=type) }}"
+        >所有科系</a
+      >
+    </li>     
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        style="white-space: nowrap;"
+        id=""
+        href="{{ url_for('繁星查詢fav') }}"
+        >我的最愛</a
+      >
+    </li>     
+  </ul>      
+
+
+  <div class="tab-content" id="ex2-content">
+    <div >
+  {% include "tab-繁星/tab-繁星簡章查詢-allschool.html" %}
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock content%}
+{% block script%}
+<script>
+    $(function () {
+      $('table').excelTableFilter({
+        'captions':{ a_to_z: '升序排列', z_to_a: '降序排列', search: '搜尋', select_all: '全選' }
+      });
+    });
+
+
+    function loading() {
+          document.getElementById("loading").innerText = "資料量較大 請耐心等候...";
+        }
+  </script>
+
+{% endblock script%}

@@ -1,0 +1,13 @@
+{% extends "base/base.html" %}
+{% block title %}未開發{% endblock title%}
+{% block h1 %}未開發{% endblock h1%}
+{% block content%}
+<div class="container-fluid" style="padding:50px ;padding-bottom: 20% ;" align="center"> 
+    {% block body %}
+      <h1>此功能尚未開發</h1>
+      <p>我幫你開其他路吧!
+      <p><a href="{{ url_for('home') }}">回首頁</a>
+    {% endblock %}
+    </div>
+    <!-- Page Start -->
+{% endblock content%}

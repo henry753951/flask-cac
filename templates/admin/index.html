@@ -1,0 +1,114 @@
+{% extends "base/base.html" %}
+{% block title %}管理面板{% endblock title%}
+{% block h1 %}管理面板{% endblock h1%}
+{% block content%}
+
+ <!-- Pills navs -->
+<div style="padding:8px;margin:8px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+  <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        id="tab-1"
+        data-mdb-toggle="pill"
+        href="#pills-1"
+        role="tab"
+        aria-controls="pills-1"
+        aria-selected="true"
+        >更新資料</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="tab-2"
+        data-mdb-toggle="pill"
+        href="#pills-2"
+        role="tab"
+        aria-controls="pills-2"
+        aria-selected="false"
+        >用戶管理</a
+      >
+    </li>    
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="tab-3"
+        data-mdb-toggle="pill"
+        href="#pills-3"
+        role="tab"
+        aria-controls="pills-3"
+        aria-selected="false"
+        >消息發布</a
+      >
+    </li>
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        id="tab-4"
+        data-mdb-toggle="pill"
+        href="#pills-4"
+        role="tab"
+        aria-controls="pills-4"
+        aria-selected="false"
+        >其他設定</a
+      >
+    </li>    
+  </ul>
+  <!-- Pills navs -->
+
+  <!-- Pills content -->
+  <div class="tab-content" id="ex2-content">
+    <div
+      class="tab-pane fade show active"
+      id="pills-1"
+      role="tabpanel"
+      aria-labelledby="tab-1"
+    >
+    {% include  "admin/getdata.html" %}
+
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-2"
+      role="tabpanel"
+      aria-labelledby="tab-2"
+    >
+    {% include  "admin/users.html" %}
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-3"
+      role="tabpanel"
+      aria-labelledby="tab-3"
+    >
+    {% include  "admin/news.html" %}
+    </div>
+    <div
+      class="tab-pane fade"
+      id="pills-4"
+      role="tabpanel"
+      aria-labelledby="tab-4"
+    >
+    {% include  "admin/others.html" %}
+    </div>
+  </div>
+</div>
+
+<script>
+      let urlParams2 = new URLSearchParams(window.location.search);
+      var pill=urlParams2.get('pill');
+      var tab=urlParams2.get('tab');
+         
+    window.onload = function(){
+        $("a[href='#pills-"+pill+"']").tab('show');
+        $("a[href='#v-tabs-"+tab+"']").tab('show');
+      }
+
+      
+         
+
+     
+</script>
+<!-- Pills content -->
+{% endblock content%}

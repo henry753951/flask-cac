@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% block title %}登入{% endblock title%}
+{% block h1 %}登入{% endblock h1%}
+{% block content%}
+    <!-- Page Start -->
+    
+    <div class="container" style="padding-top: 80px;padding-bottom: 20%; padding-left: 20%;padding-right: 20%;" align="center">
+        <h1>登入</h1>
+        <form id="login" action="{{ url_for('login') }}" class="row g-3" method="post" onsubmit="return loginsubmitForm();"> 
+          <div class="form-outline ">
+            <input type='text'  id="formControlDefault" class="form-control" name='username' required  autocomplete="off">
+            <label class="form-label" for="formControlDefault">用戶名</label>
+          </div>          
+          <div class="form-outline ">
+            <input type='password'  id="formControlDefault" class="form-control" name='password' required  autocomplete="off">
+            <label class="form-label" for="formControlDefault">密碼</label>
+          </div>
+          <button  class="btn btn-dark" id="login_btn" data-mdb-ripple-color="dark" type="submit">登入</button>
+          <div>
+            <a id="output"></a>
+          </div>          
+        </form> 
+        <a>還沒有帳號嗎? </a><a href="{{ url_for('register') }}">立即註冊一個</a>
+    </div>
+      
+    <script type="text/javascript">
+function loginsubmitForm() {
+    document.getElementById("login_btn").disabled = true;
+    // jquery 表單提交
+    $("#login").ajaxSubmit(function(message) {
+      // return message
+      console.log(message);
+      if(message=="login_succ"){
+        mess="<div class='alert alert-success' role='alert'>登入成功 </div>"
+        document.getElementById("output").innerHTML = mess;
+        setTimeout("location.href = '{{next}}';",1000);
+      }else{
+        mess="<div class='alert alert-danger' role='alert'>使用者名稱或密碼不正確 </div>"
+        document.getElementById("output").innerHTML = mess;
+        document.getElementById("login_btn").disabled = false;
+      }
+      
+    });
+    return false;
+  }
+    </script>
+{% endblock content%}

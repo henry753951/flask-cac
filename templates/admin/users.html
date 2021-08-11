@@ -1,0 +1,38 @@
+
+<!-- Page Start -->    
+    <div class="container" style="padding-top: 80px;padding-bottom: 15px;" align="center">
+        <h1>用戶管理</h1>      
+            <div class="card">
+                <div class="card-header">所有用戶</div>
+                <div class="card-body">
+                    <!-- News Start  -->
+                    <table class="w3-table w3-striped w3-small" >
+                        <thead>
+                        <tr>
+                            <th scope="col" >使用者名稱</th>
+                            <th scope="col" >E-mail</th>
+                            <th scope="col" >學校</th>
+                            <th scope="col" ></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in allusers %}
+                            <tr>
+                            <td>{{ item['name'] }}</td>
+                            <td style="word-break: break-all;">{{ item['email'] }}</td>
+                            <td>{{ item['school'] }}</td> 
+                            <td><a  href="/remove/users/{{ item['name'] }}" class="badge link-white bg-danger">刪除</a></td>                             
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+
+                <!-- News End -->
+                </div>
+            </div>
+    </div>
+      
+    <script type="text/javascript">
+
+      </script>
+      

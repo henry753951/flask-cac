@@ -1,0 +1,16 @@
+<div class="container" style="padding-top: 10px;height:500px;" align="left">
+    <h3>信息中心</h3>      
+
+</div>
+  
+<script type="text/javascript">
+    function submitForm() {
+      // jquery 表單提交
+      $("#account_update").ajaxSubmit(function(message) {
+        // return message
+        console.log(message);
+        document.getElementById("output").innerHTML = message;
+      });
+      return false;
+    }
+  </script>

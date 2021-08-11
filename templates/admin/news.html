@@ -1,0 +1,262 @@
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!-- Page Start -->    
+    <div class="container" style="padding-top: 80px;padding-bottom: 10px;" >
+      <h1 align="center"> 消息發布</h1>      
+
+
+      <div class="row  "  style="padding-top: 30px">
+        <div class="col-3">
+          <!-- Tab navs -->
+          <div
+            class="nav flex-column nav-tabs text-center"
+            id="v-tabs-tab"
+            role="tablist"
+            aria-orientation="vertical"
+          >
+            <a
+              class="nav-link active"
+              id="v-tabs-form-tab"
+              data-mdb-toggle="tab"
+              href="#v-tabs-form"
+              role="tab"
+              aria-controls="v-tabs-form"
+              aria-selected="true"
+              >消息發布</a
+            >
+            <a
+              class="nav-link"
+              id="v-tabs-news-tab"
+              data-mdb-toggle="tab"
+              href="#v-tabs-news"
+              role="tab"
+              aria-controls="v-tabs-news"
+              aria-selected="false"
+              >消息清單</a
+            >
+      
+          </div>
+          <!-- Tab navs -->
+        </div>
+      
+        <div class="col-9">
+          <!-- Tab content -->
+          <div class="tab-content" id="v-tabs-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="v-tabs-form"
+              role="tabpanel"
+              aria-labelledby="v-tabs-form-tab"
+            >
+
+            
+
+
+
+            <form id="newsrelease" action="{{ url_for('news_release') }}" class="row g-3" method="post" onsubmit="return news_submit();">
+              <div>
+                <a style="margin-right: 20px;">標籤顏色:</a>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio1"
+                    value="primary"
+                    checked
+                  />
+                  <label class="form-check-label" for="inlineRadio1"><span class="badge bg-primary">1</span></label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio2"
+                    value="secondary"
+                  />
+                  <label class="form-check-label" for="inlineRadio2"><span class="badge bg-secondary">2</span></label>
+                </div>
+                
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio3"
+                    value="success"
+                  />
+                  <label class="form-check-label" for="inlineRadio3"><span class="badge bg-success">3</span></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio4"
+                    value="danger"
+                  />
+                  <label class="form-check-label" for="inlineRadio4"><span class="badge bg-danger">4</span></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio5"
+                    value="warning text-dark"
+                  />
+                  <label class="form-check-label" for="inlineRadio5"><span class="badge bg-warning text-dark">5</span></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio6"
+                    value="info"
+                  />
+                  <label class="form-check-label" for="inlineRadio6"><span class="badge bg-info">6</span></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="news_tag_type"
+                    id="inlineRadio7"
+                    value="dark"
+                  />
+                  <label class="form-check-label" for="inlineRadio7"><span class="badge bg-dark">7</span></label>
+                </div>                                        
+              </div>    
+      
+      
+              <div class="form-outline">
+                <input type='text'  id="news_tag" class="form-control" name='news_tag' autocomplete="off" required>
+                <label class="form-label" for="news_tag">標籤名稱</label>
+              </div>     
+      
+              <div class="form-outline ">
+                <input type='text'  id="news_title" class="form-control" name='news_title' autocomplete="off" required>
+                <label class="form-label" for="news_title">標題</label>
+              </div>          
+              <div id="editor" style="margin-top: -5px;">
+                <p>Hello World!</p>
+                <p><br></p>
+              </div>
+              <input id="news_content" name="news_content" type="hidden" value="">
+              <button id="news_release_btn" class="btn btn-light" data-mdb-ripple-color="dark" type="submit">發布</button>
+              <div>
+                <a id="newsoutput"></a>
+              </div>          
+            </form> 
+
+
+
+
+
+
+
+
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-tabs-news"
+              role="tabpanel"
+              aria-labelledby="v-tabs-news-tab"
+            >
+
+            
+
+
+            <div class="card text-center">
+              <div class="card-header">最新消息</div>
+              <div class="card-body">
+                  <!-- News Start  -->
+                  <table class="w3-table w3-striped w3-small" >
+                      <thead>
+                        <tr>
+                          <th scope="col" width="20px">標籤</th>
+                          <th scope="col" width="">標題</th>
+                          <th scope="col" >日期</th>
+                          <th scope="col" ></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for item in news %}
+                          <tr>
+                            <td><span  class="badge bg-{{item['tag_type']}}">{{ item['tag'] }}</span></td>
+                            <td><a href="/new/{{ item['id'] }}">{{ item['title'] }}</a></td>
+                            <td>{{ item['date'] }}</td> 
+                            <td style="float: right;">
+                              <div class="row">
+                                <div class="col">
+                                 <a  href="/edit/news/{{ item['id'] }}" class="badge link-white bg-dark">編輯</a>
+                                </div>
+                                <div class="col">
+                                 <a  href="/remove/news/{{ item['id'] }}" class="badge link-white bg-danger">刪除</a>
+                                </div>
+                              </div>
+                            </td> 
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                      </table>
+        
+                 <!-- News End -->
+              </div>
+        </div>
+      </div>
+
+
+
+
+            </div>
+          <!-- Tab content -->
+        </div>
+      </div>
+    </div>
+
+    
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>  
+    <script type="text/javascript">
+
+
+          var toolbarOptions = [
+          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+          ['blockquote', 'code-block'],          
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+          [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+          [{ 'align': [] }],
+          ['clean']                                         // remove formatting button
+          ];
+          var quill = new Quill('#editor', {
+          modules: {
+          toolbar: toolbarOptions
+          },
+          theme: 'snow'
+          });
+    </script>
+
+
+    <script type="text/javascript">
+      function news_submit() {
+        var myEditor = document.querySelector('#editor') 
+        var html = myEditor.children[0].innerHTML 
+        document.getElementById("news_content").value = html;
+        document.getElementById("news_release_btn").disabled = true;
+        // jquery 表單提交
+        $("#newsrelease").ajaxSubmit(function(message) {
+          // return message
+          console.log(message);
+          document.getElementById("news_release_btn").innerText = message;
+          setTimeout("location.href = '{{url_for('panel')}}?pill=3';",2000);
+        });
+        return false;
+      }
+      
+    </script>

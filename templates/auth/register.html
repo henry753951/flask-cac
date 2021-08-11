@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+{% block title %}註冊{% endblock title%}
+
+{% block h1 %}註冊{% endblock h1%}
+{% block content%}
+    <!-- Page Start -->
+    <div class="container" style="padding-top: 80px;padding-bottom: 20%; padding-left: 20%;padding-right: 20%;" align="center">
+        <h1>註冊</h1>
+        <form id="reg" action="{{ url_for('register') }}" class="row g-3" method="post" onsubmit="return regsubmitForm();"> 
+          <div class="form-outline ">
+            <input type='text'  id="formControlDefault" class="form-control" name='username' required  maxlength="15"  autocomplete="off">
+            <label class="form-label" for="formControlDefault">用戶名</label>
+          </div>
+          <div class="form-outline ">
+            <input type='email'  id="formControlDefault" class="form-control" name='email' required  autocomplete="off">
+            <label class="form-label" for="formControlDefault">Email</label>
+          </div>
+          <div class="form-outline ">
+            <input type='password'  id="password" class=" form-control pr-password" name='password' required  autocomplete="off">
+            <label class="form-label" for="password">密碼</label>
+          </div>    
+
+          <div class="form-outline ">
+            <input type='password'  id="confirm_password" class="form-control" name='confirm_password' required  autocomplete="off">
+            <label class="form-label" for="confirm_password">確認密碼</label>
+          </div>  
+          <button  class="btn btn-dark" id="reg_btn" data-mdb-ripple-color="dark" type="submit">註冊</button>
+          <div>
+            <a id="output"></a>
+          </div>          
+        </form> 
+        <a>已經有帳號了嗎? </a><a href="{{ url_for('login') }}">立即登入</a>
+    </div>
+
+
+
+
+
+{% endblock content%}

@@ -1,0 +1,120 @@
+{% extends "base/base.html" %}
+{% block title %}升學小幫手 - 首頁{% endblock title%}
+{% block h1 %}首頁{% endblock h1%}
+{% block content%}
+<style>
+table{
+    width:100%;
+}
+table td{
+    white-space: nowrap;
+}
+table td:last-child{
+    width:100%;
+}
+th:last-child,
+td:last-child {
+    padding-right: 8px;
+    text-align: right;
+}
+ </style>
+
+<div class="" style="padding:8px; margin:10px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="row animate__animated animate__zoomIn delay-2" style="margin-bottom:15px ;">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header">距離學測放榜還有</div>
+                <div class="card-body">
+                <a id="countday" style="width: 200px;" class="btn btn-outline-black text-black" >載入中...</a>
+                </div>
+            </div>
+        </div>
+    </div>   
+    <div class="row ">
+        <div class="col animate__animated animate__zoomIn delay-1" style="display: table-cell ">
+            <div class="card animate__animated " style="height: 100%;">
+                <div class="card-body">
+                <h5 class="card-title">申請入學</h5>
+                <p class="card-text" style="margin-bottom: 40px;">
+                    申請不限學校、學群別，每人最多可申請6個校系。
+                </p>
+                <a href="{{ url_for('申請入學簡章查詢') }}" class="btn btn-primary" style="position:absolute;bottom: 12px;">立即前往</a>
+                </div>
+            </div>
+        </div>
+        <div class="col animate__animated animate__zoomIn delay-1" style="display: table-cell ">
+            <div class="card animate__animated " style="height: 100%;">
+                <div class="card-body">
+                <h5 class="card-title">繁星推薦</h5>
+                <p class="card-text" style="margin-bottom: 40px;">
+                    每人僅能申請一校一學群，除申請醫學系考生外，其餘免面試。
+                </p>
+                <a href="{{url_for('繁星校系分則分類')}}" class="btn btn-primary" style="position:absolute;bottom: 12px;">立即前往</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row animate__animated animate__fadeIn delay-3" style="margin-top:15px ;">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header">最新消息</div>
+                <div class="card-body">
+                    <!-- News Start  -->
+                    <table class="w3-table w3-striped w3-small" >
+                        <thead>
+                          <tr>
+                            <th scope="col">標籤</th>
+                            <th scope="col">標題</th>
+                            <th scope="col">日期</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in news %}
+                            <tr>
+                               <td><span style="min-width: 40px;" class="badge bg-{{item['tag_type']}}">{{ item['tag'] }}</span></td>
+                               <td><a href="/new/{{ item['id'] }}">{{ item['title'] }}</a></td>
+                               <td>{{ item['date'] }}</td> 
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+
+                   <!-- News End -->
+                </div>
+            </div>
+        </div>
+    </div>   
+
+</div>
+<script>
+    // Set the date we're counting down to
+    var countDownDate = new Date(2021,1,24,9).getTime();
+    
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+    
+      // Get today's date and time
+      var now = new Date().getTime();
+    
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+    
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+      // Display the result in the element with id="demo"
+      document.getElementById("countday").innerHTML = days + "天 " + hours + "小時 "
+      + minutes + "分鐘 " + seconds + "秒 ";
+    
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countday").innerHTML = "已在2月24日放榜";
+      }
+    }, 1000);
+    </script>
+{% endblock content%}

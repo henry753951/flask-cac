@@ -1,0 +1,162 @@
+{% extends "base/base.html" %}
+{% block title %}繁星校系分則查詢{% endblock title%}
+{% block h1 %}繁星校系分則查詢{% endblock h1%}
+{% block content%}
+<style>
+
+.go{
+  width: 80%;
+  margin: auto;
+  position:absolute;
+  bottom: 10px;
+  right: 10%;
+}
+.card-title{
+  font-size:xx-large;
+  margin-top: 20%;
+  vertical-align:middle;
+}
+
+
+.first{
+ text-align: left;
+ margin-top: 80px;
+ margin-left: 15% ;
+ color: white;
+ text-shadow:0.1em 0.1em 0.08em rgba(0, 0, 0, 0.6);
+}
+.sec{
+ text-align: right;
+ margin-right: 15% ;
+ color: white;
+ text-shadow:0.1em 0.1em 0.08em rgba(0, 0, 0, 0.6);
+}
+.card{
+    margin: auto;
+    height: 400px;
+    margin-left: 10px;
+    margin-right: 10px ;
+    }
+@media (max-width: 1000px) {
+.card{
+    height: 225px;
+}
+.card-title{
+  font-size:x-large;
+  margin-top: 20%;
+}
+}
+@media (max-width: 820px) {
+.card-title{
+  margin-top: 80px;
+  font-size:large;
+  margin-top: 20%;
+}
+
+  }
+
+@media (max-width: 768px) {
+.card{
+    margin: auto;
+    margin-top: 18px;
+    height: 120px;
+}
+.first{
+    text-align: center;
+    margin-top: 80px;
+    margin:auto ;
+}
+.sec{
+    text-align: center;
+    margin:auto ;
+}
+  }
+
+ </style>
+
+<div class="animate__animated animate__fadeIn delay-3"  style="padding:8px; margin:10px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+  <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link active"
+        style="white-space: nowrap;"
+        >學群分類</a
+      >
+    </li>  
+    <li class="nav-item" role="presentation">
+      <a
+        class="nav-link"
+        style="white-space: nowrap;"
+        id=""
+        href="{{ url_for('繁星查詢fav') }}"
+        >我的最愛</a
+      >
+    </li>     
+  </ul>      
+
+
+  <div align="center" style="width: 95%; margin: auto;">
+
+    <nav style="margin-left: 15px;" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url_for('home')}}">Home</a></li>
+        <li class="breadcrumb-item active">繁星校系學群分類</li>
+      </ol>
+    </nav>   
+    <div class="row">
+
+      <div class="col-md card text-center" style="background-color: rgba(165, 42, 42, 0.274);">  
+        <div class="card-body">
+          <h5 class="card-title first">第一類</h5>
+          <h5 class="card-title sec">學群校系</h5>
+          <a href="{{url_for('繁星校系分則查詢',type='第一類學群校系')}}" class="btn btn-light go">前往</a>
+        </div>
+      </div>
+      
+      <div class="col-md card text-center" style="background-color: rgba(76, 155, 201, 0.274);">
+        <div class="card-body">
+          <h5 class="card-title first">第二類</h5>
+          <h5 class="card-title sec">學群校系</h5>
+          <a href="{{url_for('繁星校系分則查詢',type='第二類學群校系')}}" class="btn btn-light go">前往</a>
+        </div>
+      </div>
+      
+      <div class="col-md card text-center" style="background-color: rgba(102, 212, 135, 0.274);">
+        <div class="card-body">
+          <h5 class="card-title first">第三類</h5>
+          <h5 class="card-title sec">學群校系</h5>
+          <a href="{{url_for('繁星校系分則查詢',type='第三類學群校系')}}" class="btn btn-light go">前往</a>
+        </div>
+      </div>
+
+      <div class="col-md card text-center" style="background-color: rgba(235, 139, 230, 0.274);">
+        <div class="card-body">
+          <h5 class="card-title first">全部</h5>
+          <h5 class="card-title sec">學群校系</h5>
+          <a href="{{url_for('繁星校系分則查詢',type='全部學群校系')}}" class="btn btn-light go">前往</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock content%}
+{% block script%}
+<script>
+    $(function () {
+      $('table').excelTableFilter({
+        'captions':{ a_to_z: '升序排列', z_to_a: '降序排列', search: '搜尋', select_all: '全選' }
+      });
+    });
+
+
+    function loading() {
+          document.getElementById("loading").innerText = "資料量較大 請耐心等候...";
+        }
+  </script>
+
+{% endblock script%}

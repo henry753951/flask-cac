@@ -1,0 +1,51 @@
+<div class="container" style="padding-top: 10px;" align="left">
+    <h3>帳號設定</h3>      
+    <form id="account_update" action="{{ url_for('account_update') }}" style="margin-top:15px ;" class="row g-3" method="post" onsubmit="return account_update_submitForm();"> 
+
+        <div class="form-group row">
+            <label for="username" class="col-sm-2 col-form-label">使用者名稱:</label>
+            <div class="col-sm-10">
+              <input type="username" class="form-control" id='username' placeholder="" disabled value="{{ current_user.id }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="e-mail" class="col-sm-2 col-form-label">E-mail:</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" name='email' id="e-mail" placeholder="" autocomplete="off" required value="{{ current_user.email }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="school" class="col-sm-2 col-form-label">就讀學校:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name='school' id="school" placeholder="" value="{{ current_user.school }}" autocomplete="off">
+            </div>
+        </div>     
+        <div style="margin-top: 15px;">
+            <h4>修改密碼</h4>
+        </div>
+        <div class="form-group row " >
+          <label for="nowpassword" class="col-sm-2 col-form-label">目前密碼:</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" name='nowpassword' id="nowpassword" placeholder="" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-group row " >
+            <label for="newpassword" class="col-sm-2 col-form-label">新密碼:</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name='newpassword'  id="newpassword" placeholder="" autocomplete="off">
+            </div>
+          </div>
+        <div class="form-group row">
+            <label for="Cnewpassword" class="col-sm-2 col-form-label">確認新密碼:</label>
+            <div class="col-sm-10">
+              <input type="password" class="form-control" name='Cnewpassword' id="Cnewpassword" placeholder="" autocomplete="off">
+            </div>
+        </div>
+        <button  class="btn btn-light " id="account_update_btn" data-mdb-ripple-color="dark" type="submit">保存</button>
+      <div>
+        <a id="output"></a>
+      </div>          
+    </form> 
+</div>
+

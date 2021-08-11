@@ -1,0 +1,82 @@
+<style>
+  .ScoreInput{
+    width: 50px;
+  }
+</style>
+<!-- Page Start -->    
+    <div class="container" style="padding-top: 80px;padding-bottom: 20%; padding-left: 10%;padding-right: 10%; width: fit-content;" align="center">
+      <h1>其他</h1>      
+        <form id="level_update" action="{{ url_for('update',type='level') }}" style="margin-top:15px ;" class="row g-3" method="post" onsubmit="return level_update_submitForm();"> 
+          <div class="form-outline">
+            <input type="number" id="form1" name="year" class="form-control" value="110"/>
+            <label class="form-label" for="form1">學年度</label>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>國文</th>
+                <th>英文</th>
+                <th>數學</th>
+                <th>自然</th>
+                <th>社會</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>頂標</td>
+                <td><input type="text" class="ScoreInput" name="國頂"/></td>
+                <td><input type="text" class="ScoreInput" name="英頂"/></td>
+                <td><input type="text" class="ScoreInput" name="數頂"/></td>
+                <td><input type="text" class="ScoreInput" name="自頂"/></td>
+                <td><input type="text" class="ScoreInput" name="社頂"/></td>
+              </tr>
+              <tr>
+                <td>前標</td>
+                <td><input type="text" class="ScoreInput" name="國前"/></td>
+                <td><input type="text" class="ScoreInput" name="英前"/></td>
+                <td><input type="text" class="ScoreInput" name="數前"/></td>
+                <td><input type="text" class="ScoreInput" name="自前"/></td>
+                <td><input type="text" class="ScoreInput" name="社前"/></td>
+              </tr>
+              <tr>
+                <td>均標</td>
+                <td><input type="text" class="ScoreInput" name="國均"/></td>
+                <td><input type="text" class="ScoreInput" name="英均"/></td>
+                <td><input type="text" class="ScoreInput" name="數均"/></td>
+                <td><input type="text" class="ScoreInput" name="自均"/></td>
+                <td><input type="text" class="ScoreInput" name="社均"/></td>
+              </tr>
+              <tr>
+                <td>後標</td>
+                <td><input type="text" class="ScoreInput" name="國後"/></td>
+                <td><input type="text" class="ScoreInput" name="英後"/></td>
+                <td><input type="text" class="ScoreInput" name="數後"/></td>
+                <td><input type="text" class="ScoreInput" name="自後"/></td>
+                <td><input type="text" class="ScoreInput" name="社後"/></td>
+              </tr>
+              <tr>
+                <td>底標</td>
+                <td><input type="text" class="ScoreInput" name="國底"/></td>
+                <td><input type="text" class="ScoreInput" name="英底"/></td>
+                <td><input type="text" class="ScoreInput" name="數底"/></td>
+                <td><input type="text" class="ScoreInput" name="自底"/></td>
+                <td><input type="text" class="ScoreInput" name="社底"/></td>
+              </tr>
+            </tbody>
+            </table>
+            
+          <button  class="btn btn-light " id="level_update_btn" data-mdb-ripple-color="dark" type="submit">保存</button>
+        </form>
+    </div>      
+    <script type="text/javascript">
+        function level_update_submitForm() {
+          document.getElementById("output").innerHTML = "";
+          $("#level_update").ajaxSubmit(function(message) {
+            console.log(message);
+            notyf.success(message);
+          });
+          return false;
+        }
+    </script>
+      

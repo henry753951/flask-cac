@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% block title %}找不到網頁{% endblock title%}
+{% block h1 %}找不到網頁{% endblock h1%}
+
+{% block content%}
+
+
+     
+
+
+<div style="padding:8px;margin:8px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="content">
+
+    <div class="container-fluid" style="padding:50px ;padding-bottom: 20%;" align="center"> 
+
+      <h1>找不到網頁</h1>
+      <p>你好像走錯地方了!
+      <p><a href="{{ url_for('home') }}">回首頁</a>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock content%}
+{% block script%}
+
+{% endblock script%}

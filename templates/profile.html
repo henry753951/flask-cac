@@ -1,0 +1,145 @@
+{% extends "base/base.html" %}
+{% block title %}個人檔案{% endblock title%}
+{% block h1 %}個人檔案{% endblock h1%}
+{% block content%}
+<script type="text/javascript">
+  
+    
+  let urlParams = new URLSearchParams(window.location.search);
+  var tab=urlParams.get('tab');
+     
+window.onload = function(){
+    $("a[href='#v-tabs-"+tab+"']").tab('show');
+    
+  }
+  
+</script>
+ <!-- Pills navs -->
+
+ <div style="padding:8px; margin:10px; background-color: rgb(255, 255, 255) ;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+ <div class="row ">
+  <div class="col-3">
+    <!-- Tab navs -->
+    <div
+      class="nav flex-column nav-tabs text-center"
+      id="v-tabs-tab"
+      role="tablist"
+      aria-orientation="vertical"
+    >
+      <a
+        class="nav-link active"
+        id="v-tabs-score-tab"
+        data-mdb-toggle="tab"
+        href="#v-tabs-score"
+        role="tab"
+        aria-controls="v-tabs-score"
+        aria-selected="true"
+        >成績設定</a
+      >
+      <a
+        class="nav-link"
+        id="v-tabs-messages-tab"
+        data-mdb-toggle="tab"
+        href="#v-tabs-messages"
+        role="tab"
+        aria-controls="v-tabs-messages"
+        aria-selected="false"
+        >信息中心</a
+      >
+      <a
+        class="nav-link"
+        id="v-tabs-account-tab"
+        data-mdb-toggle="tab"
+        href="#v-tabs-account"
+        role="tab"
+        aria-controls="v-tabs-account"
+        aria-selected="false"
+        >帳號設定</a
+      >
+
+    </div>
+    <!-- Tab navs -->
+  </div>
+
+  <div class="col-9">
+    <!-- Tab content -->
+    <div class="tab-content" id="v-tabs-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="v-tabs-score"
+        role="tabpanel"
+        aria-labelledby="v-tabs-score-tab"
+        style="background-color: rgba(240, 240, 240); "
+      >
+      {% include  "profile/score.html" %}
+      </div>
+      <div
+        class="tab-pane fade"
+        id="v-tabs-messages"
+        role="tabpanel"
+        aria-labelledby="v-tabs-messages-tab"
+        style="background-color: rgba(240, 240, 240); "
+      >
+      {% include  "profile/messages.html" %}
+      </div>
+      <div
+        class="tab-pane fade"
+        id="v-tabs-account"
+        role="tabpanel"
+        aria-labelledby="v-tabs-account-tab"
+        style="background-color: rgba(240, 240, 240); "
+      >
+      {% include  "profile/account.html" %}
+      </div>
+    </div>
+    <!-- Tab content -->
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+
+  
+
+  function account_update_submitForm() {
+    var notyf = new Notyf()
+    document.getElementById("account_update_btn").disabled = true;
+    // jquery 表單提交
+    $("#account_update").ajaxSubmit(function(message) {
+      // return message
+      console.log(message);
+      if(message=="save_succ"){
+        mess="<div class='alert alert-success' role='alert'>保存成功 </div>"
+        document.getElementById("output").innerHTML = mess;
+        document.getElementById("account_update_btn").disabled = false;
+        document. getElementById('nowpassword'). value = ''
+        document. getElementById('newpassword'). value = ''
+        document. getElementById('Cnewpassword'). value = ''
+        notyf.success("保存成功");
+      }else{
+        mess="<div class='alert alert-danger' role='alert'>"+message+"</div>"   
+        document.getElementById("output").innerHTML = mess;
+        notyf.error("保存失敗");
+        document.getElementById("account_update_btn").disabled = false;
+        document. getElementById('nowpassword'). value = ''
+      }
+      
+    });
+    return false;
+  }  
+
+
+  function score_update_submitForm() {
+      // jquery 表單提交
+      var notyf = new Notyf()
+      $("#score_update").ajaxSubmit(function(message) {
+        // return message
+        console.log(message);
+        notyf.success("保存成功");
+      });
+      return false;
+    }
+
+    
+  </script>
+
+{% endblock content%}

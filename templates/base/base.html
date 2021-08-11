@@ -1,0 +1,215 @@
+
+<!doctype html>
+<html lang="zh-tw">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    
+	<meta name="description" content="高中生升學小幫手，提供繁星及申請入學的校系分則表格化查詢，讓查詢的方法變得更佳簡單，易於比對。未來也將持續更新新的功能，敬請期待!" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/excel-bootstrap-table-filter-style.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <!--Import Awesome Icon Font-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import md5.css-->
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',    filename='css/mdb.min.css') }}">
+    <!--Import animate.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>{% block title%}{% endblock title%}</title>
+    {% endblock head %}
+    <style>
+    .delay-1 {
+    animation-delay: 0.4s;
+    }
+    .delay-2 {
+    animation-delay: 0.2s;
+    }    
+    .delay-3 {
+    animation-delay: 0.5s;
+    }    
+    </style>
+
+  </head>
+  <body style="padding-top: 60px; background-color: rgb(248, 248, 248);">
+    <!-- Nav -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Navbar brand -->
+    <a class="navbar-brand" href="/">升學小幫手</a>
+
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars fa-lg" style="color: black;"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path ==url_for('home')%} active {% endif
+            %}" aria-current="" href="{{ url_for('home') }}">首頁</a>
+        </li>
+        <!-- Navbar dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            功能
+          </a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{{ url_for('申請入學簡章查詢') }}">申請入學校系分則查詢</a></li>
+            <li><a class="dropdown-item" href="{{url_for('繁星校系分則分類')}}">繁星校系分則查詢</a></li>
+            <li><a class="dropdown-item disabled" href="#">落點分析 (施工中..)</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item disabled" href="#">敬請期待</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Left links -->
+      {% if current_user.is_authenticated %}
+      {% if current_user.role == "admin" %}
+      <div style="padding: 5px;">
+      <a href="{{ url_for('panel') }}"class="btn btn-outline-primary" data-mdb-ripple-color="dark">
+      管理面板
+      </a>
+      </div>
+
+    {% endif %}
+    <div style="padding: 5px;">
+      <div class="btn-group">
+        <button type="button"
+          class="btn btn-outline-dark dropdown-toggle"
+          data-mdb-ripple-color="dark"
+          data-mdb-toggle="dropdown"
+          aria-expanded="false"
+          style="min-width: 150px;"
+        >
+        {{ current_user.id }}
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+
+          <li><a class="dropdown-item" href="{{ url_for('account',tab='score') }}">成績設定</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('account',tab='messages') }}">最新消息</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('account',tab='account') }}">帳號管理</a></li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+          <li><a class="dropdown-item"  href="{{ url_for('logout') }}" href="#">登出</a></li>
+        </ul>
+      </div>
+    </div>
+    {% else %}
+    <a href="{{ url_for('login') }}"
+    class="btn btn-outline-dark"
+    data-mdb-ripple-color="dark"
+    >
+    登入
+    </a>
+    {% endif %}
+
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->
+ 
+
+    <div class="container-fluid animate__faster animate__animated animate__slideInDown " style="width: 100%;min-height: 180px;background-color:rgb(235, 235, 235) ;">
+      <div align="left" style="padding-left: 10px;padding-top: 25px;color: rgb(71, 71, 71);">
+        <h1 >{% block h1%}{% endblock h1%}</h1>
+        {% block box%}{% endblock box%}
+      </div>
+
+      
+      
+    </div>
+    <!-- Page Start -->
+    <div class="content">
+    {% block content %}
+    {{ super() }}
+    {% endblock %}    
+    </div>
+
+
+
+<footer class="bg-light text-center text-lg-start" style="bottom: 0; width: 100%;height: auto;">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0" style="margin-top: 30px;">
+        <h4 class="text-uppercase text-black"> 外部連結</h4>
+        <div style="font-size: small;">
+        <a style="color: rgb(35, 35, 35);" href="https://www.ceec.edu.tw">大考入學中心</a><br>
+        <a style="color: rgb(35, 35, 35);" href="https://www.cac.edu.tw">大學招生委員會</a><br>
+        <a style="color: rgb(35, 35, 35);" href="https://ap.ceec.edu.tw/ScoreSearch_SAT/">學測成績查榜</a><br>
+        
+        </div>
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-lg-6 col-md-12 mb-4 mb-md-0" style="margin-top: 30px;">
+        <h4 class="text-uppercase text-black"> 所有功能</h4>
+        <div style="font-size: small;">
+        <a style="color: rgb(35, 35, 35);" href="{{ url_for('申請入學簡章查詢') }}">申請入學校系分則</a><br>
+        <a style="color: rgb(35, 35, 35);" href="{{url_for('繁星校系分則分類')}}">繁星推薦校系分則</a><br>
+        <a style="color: rgb(35, 35, 35);" href="">申請入學落點分析  (施工中..)</a><br>
+        <a style="color: rgb(35, 35, 35);" href="">繁星入學落點分析  (施工中..)</a><br>
+        </div>
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    Copyright © <span id="copyright-year">year</span>
+    <a style="margin-left:5px;" class="text-dark" href="/">升學小幫手</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+      <script type="text/javascript">
+    document.querySelector('#copyright-year').innerText = new Date().getFullYear();
+      </script>
+    <script src="{{ url_for('static',    filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/excel-bootstrap-table-filter-bundle.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/jquery.form.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/mdb.min.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static',    filename='js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+
+    {% block script %}
+
+    {% endblock %}    
+
+  </body>
+</html>

@@ -1,0 +1,117 @@
+
+
+    <div class="row" style="margin-top:15px ;">
+
+
+
+
+      <nav style="margin-left: 15px;" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('home')}}">Home</a></li>
+          <li class="breadcrumb-item"><a href="{{url_for('繁星校系分則分類')}}">繁星校系學群分類</a></li>
+          <li class="breadcrumb-item"><a href="{{url_for('繁星校系分則查詢',type=type)}}">{{type}}</a></li>
+          <li class="breadcrumb-item active">所有科系</li>
+        </ol>
+      </nav>
+
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header">所有科系</div>
+                <div class="card-body">
+                  <p class="hidetips">(按住shift+滾輪滾動，可以快速橫向瀏覽喔!)</p>
+                  <div class="row checkbox_fixed">
+                    <div class="col"><input type="checkbox" class="form-check-input" checked value="hide" id="檢定標準" onchange="hide_show_table(this.id);">檢定標準</div>
+                    <div class="col"><input type="checkbox" class="form-check-input" checked value="hide" id="分發比序" onchange="hide_show_table(this.id);">分發比序</div>
+                </div>   
+
+
+                    <div class="div">
+                      <table id="table" class="table-rwd w3-table w3-striped w3-small table-fixed" 	style="margin-top: 30px;  " >
+                        <thead>
+                          <tr class="bottom-border fix">         
+                            <td class="filter cell" colspan="4" style="background:rgb(214, 214, 214)" scope="col"></td>   
+                            <td class="filter 檢定標準 cell" colspan="6" style="background:rgb(214, 214, 214); text-align: center; white-space:nowrap;" scope="col">檢定標準</td>  
+                            <td class="filter 分發比序" colspan="7" style="background:rgb(214, 214, 214); text-align: center; white-space:nowrap;" scope="col">分發比序</td>  
+                          </tr>
+                          <tr class="bottom-border">
+                            <th class="filter no-filter" style="white-space:nowrap;" scope="col">代碼</th>
+                            <th class="filter no-filter" style="white-space:nowrap;" scope="col">學校</th>
+                            <th class="filter no-filter" style="white-space:nowrap;" scope="col">名稱</th>
+                            <th class="filter no-filter cell"  scope="col">人數</th>  
+      
+                            <th class="filter 檢定標準 "  scope="col">國</th>   
+                            <th class="filter 檢定標準"  scope="col">英</th>   
+                            <th class="filter 檢定標準"  scope="col">數</th>   
+                            <th class="filter 檢定標準"  scope="col">自</th>   
+                            <th class="filter 檢定標準"  scope="col">社</th>   
+                            <th class="filter 檢定標準 cell"  scope="col">英聽</th>   
+                            
+                            
+                            <th class="filter 分發比序"  scope="col">一</th>
+                            <th class="filter 分發比序"  scope="col">二</th>
+                            <th class="filter 分發比序"  scope="col">三</th>
+                            <th class="filter 分發比序"  scope="col">四</th>
+                            <th class="filter 分發比序"  scope="col">五</th>
+                            <th class="filter 分發比序"  scope="col">六</th>
+                            <th class="filter 分發比序"  scope="col">七</th>         
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in departmentlist %}
+                            <tr>
+                                <td><a target="_blank" href="{{ item['url'] }}">{{ item['detail']['代碼'] }}</a></td> 
+                                <td><a target="_blank" class="link-black" href="{{ url_for('繁星校系分則查詢school',type='全部學群校系',pid=item['detail']['學校'][1:4]) }}">{{ item['detail']['學校'][5:] }} (在校前{{ item['detail']['學校繁星標準'] }})</a></td>
+                                <td><i id="i-{{ item['detail']['代碼'] }}" style="margin-right:3px; color: rgb(255, 109, 109);" onclick="add('{{ item['detail']['代碼'] }}');" class="{% if item['detail']['代碼'] not in favlist %}far{%else%}fas{%endif%} fa-star "></i>{{ item['name'] }}</td> 
+                                <td  class="cell">{{ item['detail']['招收人數'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['國'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['英'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['數'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['自'] }}</td> 
+                                <td class="檢定標準" >{{ item['detail']['學測檢定標準']['社'] }}</td> 
+                                <td class="檢定標準 cell" >{{ item['detail']['學測檢定標準']['英聽'] }}</td> 
+
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no1'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no2'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no3'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no4'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no5'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no6'] }}</td> 
+                                <td class="分發比序" >{{ item['detail']['分發比序']['no7'] }}</td> 
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                          </div>
+                          <script type="text/javascript">
+                            function hide_show_table(col_name)
+                            {
+                             var checkbox_val=document.getElementById(col_name).value;
+                             if(checkbox_val=="hide")
+                             {
+                              var all_col=document.getElementsByClassName(col_name);
+                        
+                              for(var i=0;i<all_col.length;i++)
+                              {
+                               all_col[i].style.display="none";
+                              }
+                              document.getElementById(col_name).value="show";
+                             }
+                                
+                             else
+                             {
+                              var all_col=document.getElementsByClassName(col_name);
+                              for(var i=0;i<all_col.length;i++)
+                              {
+                               all_col[i].style.display="table-cell";
+                              }
+                              document.getElementById(col_name).value="hide";
+                             }
+                            }
+                        </script>
+
+                </div>
+            </div>
+        </div>
+    </div>   
+
