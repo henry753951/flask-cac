@@ -16,7 +16,7 @@ policy = PasswordPolicy.from_names(
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://admin:Asd.213450556@34.80.196.1/Admission"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql:///Admission"
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 90
 db = SQLAlchemy(app)
 
